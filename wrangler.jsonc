@@ -2,6 +2,6 @@
   "name": "dungeon-gadgets",
   "compatibility_date": "2026-06-16",
   "assets": {
-    "directory": "./out"
+    "directory": "./site"
   }
 }

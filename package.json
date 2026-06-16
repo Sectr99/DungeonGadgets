@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "deploy": "next build && wrangler versions upload"
+    "deploy": "wrangler versions upload"
   },
   "dependencies": {
     "clsx": "^2.1.1",
