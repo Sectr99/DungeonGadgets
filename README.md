@@ -1,6 +1,6 @@
 # Dungeon Gadgets
 
-A landing page for the Dungeon Gadgets suite of free TTRPG utilities.
+Landing page for the Dungeon Gadgets suite of free TTRPG utilities, deployed on Cloudflare Workers.
 
 ## Tools
 
@@ -10,40 +10,48 @@ A landing page for the Dungeon Gadgets suite of free TTRPG utilities.
 | **Dungeon Tracker** | [tracker.dungeongadgets.com](https://tracker.dungeongadgets.com/) | Track room states, log encounters, and map your crawl |
 | **Token Forge** | [tokenforge.dungeongadgets.com](https://tokenforge.dungeongadgets.com/) | Create and export tokens for characters and monsters |
 
-## Stack
+## How it works
 
-- [Next.js 16](https://nextjs.org/) — App Router
-- [Tailwind CSS v4](https://tailwindcss.com/)
-- [Cinzel](https://fonts.google.com/specimen/Cinzel) + [EB Garamond](https://fonts.google.com/specimen/EB+Garamond) via `next/font/google`
-- Canvas particle system (vanilla JS, no dependencies)
+The site is a single self-contained `index.html` — no build step, no framework, no bundler. Dependencies are loaded from CDN at runtime:
 
-## Development
+- **Tailwind CSS** — via CDN `<script>`
+- **Cinzel + EB Garamond** — via Google Fonts
+- **Particle animation** — vanilla canvas JS, inline in the HTML
 
+The deployable files live in `dist/`:
+
+```
+dist/
+  index.html
+  assets/
+    DungeonGadgetsLogo.png   # Chest illustration (hero)
+    LogoTextNormal.png       # Stone text wordmark (header)
+    DungeoGadgetsText.png
+    TextDark.png
+```
+
+`wrangler.jsonc` points Cloudflare Workers at `./dist`. No build command needed.
+
+## Deployment
+
+Deploys automatically via Cloudflare Workers on push to `master`.
+
+**Deploy command:** `npx wrangler versions upload`
+**Build command:** *(none)*
+
+To deploy manually:
 ```bash
-npm install
-npm run dev       # http://localhost:3000
-npm run build
-npm run start
+npx wrangler versions upload
 ```
 
-## Project Structure
+## Local development
 
-```
-app/
-  layout.tsx      # Root layout, font loading, metadata
-  page.tsx        # Page composition
-  globals.css     # Tailwind + custom CSS (animations, tool row effects)
-components/
-  Background.tsx  # Animated canvas particle system + gradient overlays
-  Header.tsx      # Logo wordmark + nav
-  Hero.tsx        # Chest logo + tagline
-  ToolList.tsx    # The three tool rows with per-tool accent colors
-  Footer.tsx      # Links, copyright, license
-public/
-  DungeonGadgetsLogo.png   # Full chest illustration (hero)
-  LogoTextNormal.png       # Stone text wordmark (header)
-```
+Just open `dist/index.html` directly in a browser — no server required.
+
+## Next.js app
+
+A Next.js version of the site also lives in this repo (`app/`, `components/`) but is not currently used in production. It was scaffolded for potential future use.
 
 ## License
 
-MIT — see [LICENSE](LICENSE) for details.
+MIT
