@@ -48,10 +48,6 @@ npx wrangler versions upload
 
 Just open `dist/index.html` directly in a browser — no server required.
 
-## Next.js app
-
-A Next.js version of the site also lives in this repo (`app/`, `components/`) but is not currently used in production. It was scaffolded for potential future use.
-
 ## License
 
 MIT
