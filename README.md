@@ -12,23 +12,7 @@ Landing page for the Dungeon Gadgets suite of free TTRPG utilities, deployed on 
 
 ## How it works
 
-The site is a single self-contained `index.html` — no build step, no framework, no bundler. Dependencies are loaded from CDN at runtime:
-
-- **Tailwind CSS** — via CDN `<script>`
-- **Cinzel + EB Garamond** — via Google Fonts
-- **Particle animation** — vanilla canvas JS, inline in the HTML
-
-The deployable files live in `dist/`:
-
-```
-dist/
-  index.html
-  assets/
-    DungeonGadgetsLogo.png   # Chest illustration (hero)
-    LogoTextNormal.png       # Stone text wordmark (header)
-    DungeoGadgetsText.png
-    TextDark.png
-```
+The site is a single self-contained `dist/index.html`: no build step, no framework, no JavaScript. CSS is inline and follows the shared DungeonTools style (ink on bone paper, light and dark mode). Oswald and Crimson Pro load from Google Fonts. The logo is an inline SVG d20.
 
 `wrangler.jsonc` points Cloudflare Workers at `./dist`. No build command needed.
 
