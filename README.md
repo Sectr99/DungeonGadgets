@@ -1,37 +1,62 @@
 # Dungeon Gadgets
 
-Landing page for the Dungeon Gadgets suite of free TTRPG utilities, deployed on Cloudflare Workers.
+The home page for [Dungeon Gadgets](https://dungeongadgets.com/), a set of free browser tools for tabletop game masters. It does one thing: send you to the tool you need.
+
+![Dungeon Gadgets home page, light mode](docs/desktop-light.png)
 
 ## Tools
 
-| Tool | URL | Description |
-|------|-----|-------------|
-| **Lineage** | [lineage.dungeongadgets.com](https://lineage.dungeongadgets.com/) | Build character ancestry trees and define heritage across generations |
-| **Dungeon Tracker** | [tracker.dungeongadgets.com](https://tracker.dungeongadgets.com/) | Track room states, log encounters, and map your crawl |
-| **Token Forge** | [tokenforge.dungeongadgets.com](https://tokenforge.dungeongadgets.com/) | Create and export tokens for characters and monsters |
+| Tool | Address | What it does |
+|------|---------|--------------|
+| **Dungeon Tracker** | [tracker.dungeongadgets.com](https://tracker.dungeongadgets.com/) | Counts 10-minute turns, rolls for wandering monsters and logs each encounter. |
+| **Lineage** | [lineage.dungeongadgets.com](https://lineage.dungeongadgets.com/) | Maps a character's ancestry across generations. |
+| **Token Forge** | [tokenforge.dungeongadgets.com](https://tokenforge.dungeongadgets.com/) | Cuts round tokens for Roll20, Foundry and Owlbear Rodeo. Images stay on your device. |
 
-## How it works
+Each tool lives in its own repository and deploys to its own subdomain.
 
-The site is a single self-contained `dist/index.html`: no build step, no framework, no JavaScript. CSS is inline and follows the shared DungeonTools style (ink on bone paper, light and dark mode). Oswald and Crimson Pro load from Google Fonts. The logo is an inline SVG d20.
+## Light, dark and phone
 
-`wrangler.jsonc` points Cloudflare Workers at `./dist`. No build command needed.
+The page follows the system colour scheme. Below 920px the three panels stack so every Open button fits on the first screen.
+
+| Dark | Phone (light) | Phone (dark) |
+|------|---------------|--------------|
+| ![Dark mode](docs/desktop-dark.png) | ![Phone, light mode](docs/phone-light.png) | ![Phone, dark mode](docs/phone-dark.png) |
+
+## By the numbers
+
+| | |
+|---|---|
+| Files deployed | 1 (`dist/index.html`) |
+| Page size | 16.4 KB, 4.9 KB gzipped |
+| JavaScript | None of its own |
+| Images | None; the d20 logo and tool icons are inline SVG |
+| Fonts | Oswald and Crimson Pro (Google Fonts, served by Cloudflare) |
+| Build step | None |
+| Colour schemes | Light and dark |
+
+## Design
+
+The page uses the shared DungeonTools style, the same as Dungeon Tracker: ink on bone paper, ruled like a printed rulebook, one red reserved for the d20. Oswald capitals carry structure; Crimson Pro carries anything you read. No gradients, shadows or animation.
+
+## Security
+
+A Content-Security-Policy meta tag in `dist/index.html` limits the page to:
+
+- styles from itself and Google Fonts
+- fonts from itself (Cloudflare re-hosts the Google Fonts) and Google
+- images from itself and inline `data:` URIs
+- one script: Cloudflare Web Analytics, which reports to `cloudflareinsights.com`
+
+Inline scripts, frames and plugins are blocked. Anything new the page loads must be added to the policy.
 
 ## Deployment
 
-Deploys automatically via Cloudflare Workers on push to `master`.
-
-**Deploy command:** `npx wrangler versions upload`
-**Build command:** *(none)*
-
-To deploy manually:
-```bash
-npx wrangler versions upload
-```
+Cloudflare Workers serves `./dist` as static assets (`wrangler.jsonc`). Every push to `main` deploys with `npx wrangler deploy` and is live in about a minute. There is no build command.
 
 ## Local development
 
-Just open `dist/index.html` directly in a browser — no server required.
+Open `dist/index.html` in a browser. No server needed.
 
 ## License
 
-MIT
+[MIT](LICENSE)

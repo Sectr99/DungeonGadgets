@@ -4,3 +4,12 @@
 !/README.md
 !/wrangler.jsonc
 !/dist/
+!/docs/
+!/LICENSE
+
+# Claude / agent files are local only, even if the allowlist above changes
+CLAUDE.md
+CLAUDE.local.md
+AGENTS.md
+.claude/
+.mcp.json
